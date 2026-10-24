@@ -7,7 +7,7 @@ type Props = {
 }
 
 function showInView(el: HTMLElement) {
-  const visible = [...document.querySelectorAll<HTMLElement>('.reveal:not(.is-in)')]
+  const visible = Array.from(document.querySelectorAll<HTMLElement>('.reveal:not(.is-in)'))
     .filter((node) => {
       const box = node.getBoundingClientRect()
       return box.bottom > 0 && box.top < window.innerHeight * 0.92
