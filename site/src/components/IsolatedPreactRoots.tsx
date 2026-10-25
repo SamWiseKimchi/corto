@@ -1,4 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { Boxes, Database, LayoutTemplate, PanelTop, Radio } from 'lucide-react'
+import { DiagramMark } from '../guideMarks.tsx'
 
 type Box = { x: number; y: number; w: number; h: number }
 
@@ -101,7 +103,12 @@ function Mount({ box, title }: { box: Box; title: string }) {
   return (
     <g>
       <rect className="roots-mount" x={box.x} y={box.y} width={box.w} height={box.h} rx={8} />
-      <text x={box.x + 12} y={box.y + 18} textAnchor="start">
+      <DiagramMark
+        icon={title === 'Header root' ? PanelTop : LayoutTemplate}
+        x={box.x + 10}
+        y={box.y + 6}
+      />
+      <text x={box.x + 28} y={box.y + 18} textAnchor="start">
         {title}
       </text>
     </g>
@@ -146,7 +153,10 @@ export default function IsolatedPreactRoots() {
         cross those roots.
       </p>
       <div className="roots-heading">
-        <h2>Isolated Preact roots</h2>
+        <h2>
+          <Boxes className="guide-mark" size={18} aria-hidden="true" />
+          Isolated Preact roots
+        </h2>
         <p>Context stays in one tree</p>
       </div>
       <ul className="arch-legend roots-legend">
@@ -166,7 +176,7 @@ export default function IsolatedPreactRoots() {
           aria-label="JSP header and body roots. Context stops at the header tree. localStorage and events connect the modules."
           viewBox={`0 0 ${layout.w} ${layout.h}`}
         >
-          <rect className="roots-frame" x={1} y={1} width={layout.w - 2} height={layout.frameH - 2} rx={8} />
+          <rect className="roots-frame" x={1} y={1} width={layout.w - 2} height={layout.frameH - 2} rx={12} />
           <text x={16} y={20} textAnchor="start">
             JSP document
           </text>
@@ -182,10 +192,11 @@ export default function IsolatedPreactRoots() {
             height={layout.ctx.h}
             rx={8}
           />
-          <text x={layout.ctx.x + layout.ctx.w / 2} y={layout.ctx.y + 14} textAnchor="middle">
+          <DiagramMark icon={Boxes} x={layout.ctx.x + 6} y={layout.ctx.y + 13} size={12} />
+          <text x={layout.ctx.x + layout.ctx.w / 2 + 8} y={layout.ctx.y + 14} textAnchor="middle">
             Context
           </text>
-          <text x={layout.ctx.x + layout.ctx.w / 2} y={layout.ctx.y + 28} textAnchor="middle">
+          <text x={layout.ctx.x + layout.ctx.w / 2 + 8} y={layout.ctx.y + 28} textAnchor="middle">
             provider
           </text>
           {layout.stop ? (
@@ -223,15 +234,17 @@ export default function IsolatedPreactRoots() {
             y={layout.channelY}
             width={layout.w - 2}
             height={layout.channelH}
-            rx={8}
+            rx={12}
           />
           <text x={layout.w / 2} y={layout.channelY + 24} textAnchor="middle">
             Pub/sub between modules
           </text>
-          <text x={layout.w * 0.32} y={layout.channelY + 48} textAnchor="middle">
+          <DiagramMark icon={Database} x={layout.w * 0.32 - 58} y={layout.channelY + 38} />
+          <text x={layout.w * 0.32 - 40} y={layout.channelY + 48} textAnchor="start">
             localStorage
           </text>
-          <text x={layout.w * 0.68} y={layout.channelY + 48} textAnchor="middle">
+          <DiagramMark icon={Radio} x={layout.w * 0.68 - 34} y={layout.channelY + 38} />
+          <text x={layout.w * 0.68 - 16} y={layout.channelY + 48} textAnchor="start">
             events
           </text>
           {layout.wires.map((wire) => (

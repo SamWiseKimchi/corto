@@ -1,5 +1,18 @@
 import type { ReactNode } from 'react'
+import { AppWindow, Flag, Library, Server, Split } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import Reveal from '../Reveal.tsx'
+
+function RegionTitle({ icon: Icon, children }: { icon: LucideIcon; children: ReactNode }) {
+  return (
+    <Reveal>
+      <span className="arch-region-title">
+        <Icon className="guide-mark" size={18} aria-hidden="true" />
+        {children}
+      </span>
+    </Reveal>
+  )
+}
 
 function Card({
   title,
@@ -54,7 +67,7 @@ export default function Architecture() {
 
       <article className="arch-region arch-region-blue" aria-label="Browser page">
         <div>
-          <Reveal>Browser page</Reveal>
+          <RegionTitle icon={AppWindow}>Browser page</RegionTitle>
           <Reveal className="arch-muted">JSP builds root elements</Reveal>
         </div>
         <div className="arch-peers">
@@ -85,7 +98,7 @@ export default function Architecture() {
           aria-label="Shared component library"
         >
           <div>
-            <Reveal>React component library</Reveal>
+            <RegionTitle icon={Library}>React component library</RegionTitle>
             <Reveal className="arch-muted">TypeScript, own versions</Reveal>
           </div>
           <Card title="Storybook" />
@@ -94,19 +107,19 @@ export default function Architecture() {
         </article>
         <article className="arch-region" aria-label="Java microservices">
           <div>
-            <Reveal>Java microservices</Reveal>
+            <RegionTitle icon={Server}>Java microservices</RegionTitle>
             <Reveal className="arch-muted">Swagger API contracts</Reveal>
             <Reveal className="arch-muted">Called by the page</Reveal>
           </div>
           <Card title="Constructor.io" lines={['On one microservice']} />
         </article>
         <article className="arch-region" aria-label="Unleash">
-          <Reveal>Unleash</Reveal>
+          <RegionTitle icon={Flag}>Unleash</RegionTitle>
           <Reveal className="arch-muted">Feature flags</Reveal>
           <Reveal className="arch-muted">Recommendation rollout</Reveal>
         </article>
         <article className="arch-region" aria-label="Optimizely">
-          <Reveal>Optimizely</Reveal>
+          <RegionTitle icon={Split}>Optimizely</RegionTitle>
           <Reveal className="arch-muted">A/B experiments</Reveal>
           <Reveal className="arch-muted">Recommendation rollout</Reveal>
         </article>

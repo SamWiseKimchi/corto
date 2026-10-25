@@ -8,6 +8,8 @@
   --browser-wash: #173041;
   --library: #c4b0dc;
   --library-wash: #2a2433;
+  --radius: 12px;
+  --radius-nest: 8px;
   color: var(--paper);
   background: var(--field);
   font-family: Sora, "Avenir Next", "Segoe UI", sans-serif;
@@ -232,6 +234,9 @@ main {
 }
 
 .roots-heading h2 {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
   margin: 0;
   max-width: none;
   font-size: 1.25rem;
@@ -338,6 +343,8 @@ main {
 .guide .guide-numbers > li {
   background: var(--panel);
   border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .guide .guide-card {
@@ -394,6 +401,7 @@ main {
 .guide .guide-point {
   background: var(--field);
   border: 1px solid var(--line);
+  border-radius: var(--radius-nest);
   padding: 12px 14px;
   color: color-mix(in srgb, var(--paper) 88%, var(--quiet));
 }
@@ -409,6 +417,34 @@ main {
 .guide .guide-number-body > p > strong:first-child {
   display: block;
   margin-bottom: 0.3rem;
+}
+
+.guide .guide-point > strong.guide-label,
+.guide .guide-number-body > strong.guide-label,
+.guide .guide-point > p > strong.guide-label,
+.guide .guide-number-body > p > strong.guide-label {
+  display: flex;
+}
+
+.guide h2 > .reveal-inner,
+.guide .guide-card-title,
+.guide .guide-label,
+.arch-region-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.guide-mark {
+  flex: none;
+  margin-top: 0.18em;
+  color: var(--paper);
+}
+
+.guide h2 .guide-mark,
+.guide .guide-card-title .guide-mark,
+.arch-region-title .guide-mark {
+  color: var(--browser);
 }
 
 .guide .guide-point .guide-point {
@@ -548,6 +584,7 @@ main {
   padding: 22px 22px 16px;
   background: var(--panel);
   border: 1px solid var(--line);
+  border-radius: var(--radius);
 }
 
 .arch-region-blue {

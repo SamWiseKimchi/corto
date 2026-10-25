@@ -1,8 +1,9 @@
-import { createContext, useContext, type ClassAttributes, type HTMLAttributes } from 'react'
+import { createContext, useContext, type ClassAttributes, type HTMLAttributes, type ReactNode } from 'react'
 import ReactMarkdown, { type Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import guide from '../../../interview_preparation_guide.md?raw'
 import IsolatedPreactRoots from '../components/IsolatedPreactRoots.tsx'
+import { GuideMark, markFor, textOf } from '../guideMarks.tsx'
 import Reveal from '../Reveal.tsx'
 
 type BlockProps = ClassAttributes<HTMLElement> & HTMLAttributes<HTMLElement>
@@ -61,12 +62,25 @@ function splitGuide(source: string): Piece[] {
 
 function block(as: 'h1' | 'h2' | 'h3' | 'h4') {
   return function MarkdownBlock({ children, className }: BlockProps) {
+    const label = as === 'h1' ? '' : textOf(children)
     return (
       <Reveal as={as} className={className}>
+        {label ? <GuideMark label={label} /> : null}
         {children}
       </Reveal>
     )
   }
+}
+
+function Label({ children }: { children?: ReactNode }) {
+  const label = textOf(children)
+  if (!markFor(label)) return <strong>{children}</strong>
+  return (
+    <strong className="guide-label">
+      <GuideMark label={label} size={16} />
+      <span>{children}</span>
+    </strong>
+  )
 }
 
 function Paragraph({ children, className }: BlockProps) {
@@ -121,6 +135,7 @@ const prose: Components = {
   p: Paragraph,
   li: ProseItem,
   ol: OrderedList,
+  strong: Label,
 }
 
 const cards: Components = {
@@ -128,6 +143,7 @@ const cards: Components = {
   ul: BulletList,
   li: PointItem,
   ol: OrderedList,
+  strong: Label,
 }
 
 const pieces = splitGuide(guide)
@@ -143,6 +159,7 @@ function GuideCard({ card }: { card: Card }) {
         <div className="guide-card-main">
           <h3 className="guide-card-title">
             <span className="sr-only">{card.n}. </span>
+            <GuideMark label={card.title} />
             {card.title}
           </h3>
           {body ? (
